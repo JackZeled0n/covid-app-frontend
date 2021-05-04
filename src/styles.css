@@ -3,7 +3,11 @@ body {
 }
 
 .background {
-    background-image: url("../../../../assets/img/nurse.jpg");
+    background-image: url("assets/img/nurse.jpg");
+}
+
+.background-register {
+    background-image: url("assets/img/register.jpg");
 }
 
 a {
