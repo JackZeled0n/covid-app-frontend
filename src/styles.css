@@ -1,6 +1,6 @@
-body {
-    background-color: F0F7FD;
-}
+:root {
+    --background-color-dashboard: #FDD3D3;
+  }
 
 .background {
     background-image: url("assets/img/nurse.jpg");
@@ -8,6 +8,10 @@ body {
 
 .background-register {
     background-image: url("assets/img/register.jpg");
+}
+
+.background-color-dashboard {
+    background-color: var(--background-color-dashboard);
 }
 
 a {
