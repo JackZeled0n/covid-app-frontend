@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
       type: 'pie'
     }]
     , colors: [
-      '#28a745',
-      '#007bff',
-      '#dc3545'
+      '#4CAF50',
+      '#536DFE',
+      '#F76B57'
     ],
   };
 
