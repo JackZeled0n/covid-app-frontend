@@ -8,6 +8,8 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DataTablesModule } from 'angular-datatables';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,9 @@ import { DataTablesModule } from 'angular-datatables';
     , AppRoutingModule
     , HighchartsChartModule
     , DataTablesModule
+    , HttpClientModule
+    , FormsModule
+    , ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
