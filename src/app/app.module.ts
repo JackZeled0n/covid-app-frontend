@@ -7,6 +7,7 @@ import { LoginComponent } from './modules/authentication/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     BrowserModule
     , AppRoutingModule
     , HighchartsChartModule
+    , DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
