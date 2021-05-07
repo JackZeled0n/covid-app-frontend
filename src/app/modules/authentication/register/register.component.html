@@ -13,31 +13,31 @@
 
                         <h3 class="text-center">Sign up</h3>
                         <p class="mb-4">Please, fill up the form below</p>
-                        <form class="mt-4" action="#">
+                        <form class="mt-4" action="#" [formGroup]="formGroupRegister" (ngSubmit)="register()">
 
                             <div class="form-group first">
                                 <label for="names" class="text-left">Full name</label>
-                                <input type="text" class="form-control" placeholder="John Doe Machoraton" id="names">
+                                <input type="text" class="form-control" placeholder="John Doe Machoraton" id="names" formControlName="name">
                             </div>
 
                             <div class="form-group">
-                                <label for="email-register" class="text-left">Email</label>
-                                <input type="text" class="form-control" placeholder="your-email@gmail.com"
-                                    id="email-register">
+                                <label for="email-register" class="text-left">Username</label>
+                                <input type="text" class="form-control" placeholder="username"
+                                    id="email-register" formControlName="userName">
                             </div>
 
                             <div class="form-group">
                                 <label for="password-register" class="text-left">Password</label>
                                 <input type="password" class="form-control" placeholder="Your Password"
-                                    id="password-register">
+                                    id="password-register" formControlName="password">
                             </div>
 
-                            <div class="form-group last mb-3">
+                            <!-- <div class="form-group last mb-3">
                                 <label for="confirmPassword-register" class="text-left">Confirm password</label>
                                 <input type="password" class="form-control" placeholder="Confirm password"
                                     id="confirmPassword-register">
-                            </div>
-                            <input type="submit" value="Sign up" class="btn btn-block btn-primary mt-3">
+                            </div> -->
+                            <button type="submit" class="btn btn-block btn-primary mt-5">Sign up</button>
                         </form>
                         <div class="mt-3 text-center">
                             <span class="new-account-label">Already have an account? <a href="#">Sign in</a></span>
