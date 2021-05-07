@@ -1,5 +1,9 @@
+:root {
+    --background-color-dashboard: #fdd3d3;
+}
+
 body {
-    background-color: F0F7FD;
+    overflow-x: hidden;
 }
 
 .background {
@@ -8,6 +12,10 @@ body {
 
 .background-register {
     background-image: url("assets/img/register.jpg");
+}
+
+.background-color-dashboard {
+    background-color: var(--background-color-dashboard);
 }
 
 a {
@@ -156,4 +164,16 @@ a:hover {
     100% {
         transform: translateY(-10px);
     }
+}
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #f76c57;
+    border-color: var(--background-color-dashboard);
+    border-radius: 50px;
+    text-align: center;
 }

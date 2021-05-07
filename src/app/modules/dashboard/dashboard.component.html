@@ -1,1 +1,307 @@
-<p>dashboard works!</p>
+<!-- <div  style="background-color: #F0F7FD;"> -->
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Covid statistics</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Log out <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="background-color-dashboard">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mt-3 text-dark">Welcome username</h2>
+            </div>
+            <div class="col-12">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="../../../assets/img/coronavirus.svg" width="250" class="animation-logo text-center"
+                        alt="logo">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mt-n5">
+        <div class="row">
+            <div class="col-xl-4 col-sm-6 col-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-12 mb-3">
+                                <img src="../../../assets/img/total.svg" width="70" alt="total">
+                            </div>
+                            <div class="col-12">
+                                <h3>154,197.355</h3>
+                                <p class="mb-0 h5 text-success">Total cases</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-6 col-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-12 mb-3">
+                                <img src="../../../assets/img/recovery.svg" width="70" alt="total">
+                            </div>
+                            <div class="col-12">
+                                <h3>132,197.355</h3>
+                                <p class="mb-0 h5 text-primary">Tests</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-6 col-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-12 mb-3">
+                                <img src="../../../assets/img/death.svg" width="70" alt="total">
+                            </div>
+                            <div class="col-12">
+                                <h3>3,197.355</h3>
+                                <p class="mb-0 h5 text-danger">Deaths</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+                            style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container-fluid px-5 mb-5">
+        <div class="row">
+            <div class="col-12 mb-4 text-center">
+
+
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-oceania-tab" data-toggle="pill" href="#pills-oceania"
+                            role="tab" aria-controls="pills-oceania" aria-selected="true">
+                            <div class="card shadow oceania">
+                                <div class="card-body">
+                                    <h3>Oceania</h3>
+                                    <h5>Total cases: 154,197.355</h5>
+                                    <h5>Tests: 98,197.355</h5>
+                                    <h5>Deaths: 1,197.355</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-asia-tab" data-toggle="pill" href="#pills-asia" role="tab"
+                            aria-controls="pills-asia" aria-selected="false">
+                            <div class="card shadow asia">
+                                <div class="card-body">
+                                    <h3>Asia</h3>
+                                    <h5>Total cases: 154,197.355</h5>
+                                    <h5>Tests: 98,197.355</h5>
+                                    <h5>Deaths: 1,197.355</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-africa-tab" data-toggle="pill" href="#pills-africa" role="tab"
+                            aria-controls="pills-africa" aria-selected="false">
+                            <div class="card shadow africa">
+                                <div class="card-body">
+                                    <h3>Africa</h3>
+                                    <h5>Total cases: 154,197.355</h5>
+                                    <h5>Tests: 98,197.355</h5>
+                                    <h5>Deaths: 1,197.355</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-america-tab" data-toggle="pill" href="#pills-america" role="tab"
+                            aria-controls="pills-america" aria-selected="true">
+                            <div class="card shadow america">
+                                <div class="card-body">
+                                    <h3>America</h3>
+                                    <h5>Total cases: 154,197.355</h5>
+                                    <h5>Tests: 98,197.355</h5>
+                                    <h5>Deaths: 1,197.355</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-europe-tab" data-toggle="pill" href="#pills-europe" role="tab"
+                            aria-controls="pills-europe" aria-selected="true">
+                            <div class="card shadow europe">
+                                <div class="card-body">
+                                    <h3>Europe</h3>
+                                    <h5>Total cases: 154,197.355</h5>
+                                    <h5>Tests: 98,197.355</h5>
+                                    <h5>Deaths: 1,197.355</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-oceania" role="tabpanel"
+                        aria-labelledby="pills-oceania-tab">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <div class="px-5">
+
+                                    <table datatable class="row-border hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First name</th>
+                                                <th>Last name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Foo</td>
+                                                <td>Bar</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Someone</td>
+                                                <td>Youknow</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Iamout</td>
+                                                <td>Ofinspiration</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Yoda</td>
+                                                <td>Skywalker</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Patrick</td>
+                                                <td>Dupont</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Barack</td>
+                                                <td>Obama</td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>François</td>
+                                                <td>Holland</td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td>Michel</td>
+                                                <td>Popo</td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td>Chuck</td>
+                                                <td>Norris</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td>Simon</td>
+                                                <td>Robin</td>
+                                            </tr>
+                                            <tr>
+                                                <td>11</td>
+                                                <td>Louis</td>
+                                                <td>Lin</td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td>
+                                                <td>Zelda</td>
+                                                <td>Link</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-asia" role="tabpanel" aria-labelledby="pills-asia-tab">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <h1>asia</h1>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-africa" role="tabpanel" aria-labelledby="pills-africa-tab">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <h1>africa</h1>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-america" role="tabpanel" aria-labelledby="pills-america-tab">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <h1>america</h1>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-europe" role="tabpanel" aria-labelledby="pills-europe-tab">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <h1>europe</h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<button class="float">
+    <img src="../../../assets/img/refresh.svg" width="30" alt="refresh icon">
+</button>
