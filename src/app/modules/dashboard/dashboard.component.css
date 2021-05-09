@@ -7,12 +7,12 @@
     background-color: rgba(255, 255, 255, 1) !important;
 }
 
-.oceania {
+.Oceania {
     text-align: center;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
 
-.nav-pills .nav-link.active .oceania {
+.nav-pills .nav-link.active .Oceania {
     text-align: left;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/oceania.svg);
     background-size: auto;
@@ -20,12 +20,12 @@
     background-repeat: no-repeat;
 }
 
-.asia {
+.Asia {
     text-align: center;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
 
-.nav-pills .nav-link.active .asia {
+.nav-pills .nav-link.active .Asia {
     text-align: left;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/asia.svg);
     background-size: auto;
@@ -33,12 +33,12 @@
     background-repeat: no-repeat;
 }
 
-.africa {
+.Africa {
     text-align: center;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
 
-.nav-pills .nav-link.active .africa {
+.nav-pills .nav-link.active .Africa {
     text-align: left;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/africa.svg);
     background-size: auto;
@@ -46,12 +46,12 @@
     background-repeat: no-repeat;
 }
 
-.america {
+.North-America, .South-America {
     text-align: center;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
 
-.nav-pills .nav-link.active .america {
+.nav-pills .nav-link.active .North-America, .nav-pills .nav-link.active .South-America {
     text-align: left;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/america.svg);
     background-size: auto;
@@ -59,14 +59,27 @@
     background-repeat: no-repeat;
 }
 
-.europe {
+.Europe {
     text-align: center;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
 }
 
-.nav-pills .nav-link.active .europe {
+.nav-pills .nav-link.active .Europe {
     text-align: left;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/europe.svg);
+    background-size: auto;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.All {
+    text-align: center;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+}
+
+.nav-pills .nav-link.active .All {
+    text-align: left;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../assets/img/all.svg);
     background-size: auto;
     background-position: right;
     background-repeat: no-repeat;
