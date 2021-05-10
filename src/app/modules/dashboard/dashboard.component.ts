@@ -247,4 +247,24 @@ export class DashboardComponent implements OnInit {
       );
     }
   }
+
+  updateDeaths(): void {
+    const data = {
+      statisticId: this.formGroupDeaths.value.idCountryDeathInfo,
+      newDeaths: this.formGroupDeaths.value.newDeaths,
+    };
+
+    if (this.formGroupTests.valid) {
+      this.statisticsService.updateDeaths(data).subscribe(
+        (result) => {
+          console.log(result);
+          alert(result);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          console.log(error.error.message);
+        }
+      );
+    }
+  }
 }
