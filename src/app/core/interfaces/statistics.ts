@@ -4,7 +4,7 @@ import { Tests } from './tests';
 
 export interface Statistics {
   cases: Cases;
-  death: Deaths;
+  deaths: Deaths;
   tests: Tests;
   population: number;
   continent: string;
