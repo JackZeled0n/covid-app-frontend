@@ -230,7 +230,6 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateCases(data).subscribe(
         (result) => {
           console.log(result);
-          alert(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -250,7 +249,6 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateTests(data).subscribe(
         (result) => {
           console.log(result);
-          alert(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -270,7 +268,6 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateDeaths(data).subscribe(
         (result) => {
           console.log(result);
-          alert(result);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -278,6 +275,18 @@ export class DashboardComponent implements OnInit {
         }
       );
     }
+  }
+
+  synchronize(): void {
+    this.statisticsService.synchronizeInfo().subscribe((statistics) => {
+      this.statisticsArray = statistics.filter(
+        (statistic) =>
+          statistic.continent !== 'All' && statistic.continent !== null
+      );
+
+      this.getValues(this.statisticsArray);
+      this.rerender();
+    });
   }
 
   resetForms(): void {
