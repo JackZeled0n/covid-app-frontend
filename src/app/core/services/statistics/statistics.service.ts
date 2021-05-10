@@ -36,4 +36,15 @@ export class StatisticsService {
       }
     );
   }
+
+  updateTests(body: any): Observable<any> {
+    const data = JSON.stringify(body);
+    return this.http.put<Statistics>(
+      environment.developmentUrl + 'statistics/new-tests',
+      data,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }
