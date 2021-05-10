@@ -191,7 +191,8 @@
                     </div>
                     <div class="form-group">
                         <label for="newCases">New cases</label>
-                        <input type="text" class="form-control" id="newCases" placeholder="Enter new cases" formControlName="newCases">
+                        <input type="text" class="form-control" id="newCases" placeholder="Enter new cases"
+                            formControlName="newCases">
                     </div>
                     <div class="form-group">
                         <label for="activeNewCases">Actives</label>
@@ -216,15 +217,20 @@
             </div>
         </form>
 
-        <form action="">
+        <form [formGroup]="formGroupTests" (ngSubmit)="updateTests()">
             <div class="row">
                 <div class="col-12">
                     <hr class="dashed">
                     <h4 class="text-center">New tests</h4>
+                    <div class="form-group hidden-input">
+                        <label for="idCountryTestInfo">Id</label>
+                        <input type="text" class="form-control" id="idCountryTestInfo" placeholder="Id"
+                            formControlName="idCountryTestInfo">
+                    </div>
                     <div class="form-group">
                         <label for="newTests">Tests</label>
                         <input type="text" class="form-control" id="newTests" placeholder="Enter tests"
-                            value="{{singleCountry.tests.total}}">
+                            formControlName="newTests">
                     </div>
                 </div>
 
@@ -234,15 +240,18 @@
             </div>
         </form>
 
-        <form action="">
+        <form [formGroup]="formGroupDeaths" (ngSubmit)="updateDeaths()">
             <div class="row">
                 <div class="col-12">
                     <hr class="dashed">
                     <h4 class="text-center">New deaths</h4>
+                    <div class="form-group hidden-input">
+                        <label for="idCountryDeathInfo">Id</label>
+                        <input type="text" class="form-control" id="idCountryDeathInfo" placeholder="Id" formControlName="idCountryDeathInfo">
+                    </div>
                     <div class="form-group">
                         <label for="newDeaths">Deaths</label>
-                        <input type="text" class="form-control" id="newDeaths" placeholder="Enter deaths"
-                            value="{{singleCountry.deaths.total}}">
+                        <input type="text" class="form-control" id="newDeaths" placeholder="Enter deaths" formControlName="newDeaths">
                     </div>
                 </div>
 
