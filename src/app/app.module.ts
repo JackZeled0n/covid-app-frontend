@@ -6,28 +6,30 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/authentication/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
-import { HighchartsChartModule } from 'highcharts-angular';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
-    BrowserModule
-    , AppRoutingModule
-    , HighchartsChartModule
-    , DataTablesModule
-    , HttpClientModule
-    , FormsModule
-    , ReactiveFormsModule
+    BrowserModule,
+    AppRoutingModule,
+    DataTablesModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ChartsModule,
+    NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
