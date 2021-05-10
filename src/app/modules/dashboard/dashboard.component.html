@@ -41,7 +41,7 @@
                                 <img src="../../../assets/img/total.svg" width="70" alt="total">
                             </div>
                             <div class="col-12">
-                                <h3>{{totalCases}}</h3>
+                                <h3>{{totalCases | number}}</h3>
                                 <p class="mb-0 h5 text-success">Total cases</p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                                 <img src="../../../assets/img/recovery.svg" width="70" alt="total">
                             </div>
                             <div class="col-12">
-                                <h3>{{totalTests}}</h3>
+                                <h3>{{totalTests | number}}</h3>
                                 <p class="mb-0 h5 text-primary">Tests</p>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                 <img src="../../../assets/img/death.svg" width="70" alt="total">
                             </div>
                             <div class="col-12">
-                                <h3>{{totalDeaths}}</h3>
+                                <h3>{{totalDeaths | number}}</h3>
                                 <p class="mb-0 h5 text-danger">Deaths</p>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                             <tr *ngFor="let statistic of statisticsArray; let i = index">
                                                 <td>{{i+1}}</td>
                                                 <td>{{statistic.country}}</td>
-                                                <td>{{statistic.population}}</td>
+                                                <td>{{statistic.population | number}}</td>
                                                 <td>
                                                     <button class="btn btn-primary"
                                                         (click)="open(mymodal, statistic)">Edit</button>
