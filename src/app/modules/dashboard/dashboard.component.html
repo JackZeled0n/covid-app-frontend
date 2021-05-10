@@ -83,8 +83,13 @@
             <div class="col-12 mb-4">
                 <div class="card shadow">
                     <div class="card-body">
-                        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
-                            style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+
+                        <div style="display: block;">
+                            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                                [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                            </canvas>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -99,9 +104,10 @@
 
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-                    <li class="nav-item" *ngFor="let continent of continents">
-                        <a class="nav-link" id="pills-{{continent}}-tab" data-toggle="pill" href="#pills-{{continent}}"
-                            role="tab" aria-controls="pills-{{continent}}" aria-selected="true">
+                    <li class="nav-item" *ngFor="let continent of continents; let i = index;">
+                        <a [ngClass]="i === 0 ? 'nav-link active' : 'nav-link'" id="pills-continents-tab"
+                            data-toggle="pill" href="#pills-continents" role="tab" aria-controls="pills-continents"
+                            aria-selected="true" (click)="getStatisticsByContinent(continent)">
                             <div class="card shadow {{continent}}">
                                 <div class="card-body">
                                     <h3>{{continent}}</h3>
@@ -115,26 +121,33 @@
                 </ul>
 
                 <div class="tab-content mt-5" id="pills-tabContent">
-                    
-                    <div class="tab-pane fade" id="pills-All" role="tabpanel" aria-labelledby="pills-all-tab">
+
+                    <div class="tab-pane fade show active" id="pills-continents" role="tabpanel"
+                        aria-labelledby="pills-continents-tab">
                         <div class="card shadow">
                             <div class="card-body">
 
                                 <div class="px-5">
 
-                                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                                        class="row-border hover">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Country</th>
                                                 <th>Population</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let statistic of statisticsArray; let i = index">
-                                                <td>{{i}}</td>
+                                                <td>{{i+1}}</td>
                                                 <td>{{statistic.country}}</td>
                                                 <td>{{statistic.population}}</td>
+                                                <td>
+                                                    <button class="btn btn-primary"
+                                                        (click)="open(mymodal, statistic)">Edit</button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -156,3 +169,91 @@
 <button class="float">
     <img src="../../../assets/img/refresh.svg" width="30" alt="refresh icon">
 </button>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-edit-statistics">Edit statistics from {{singleCountry.country}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="formGroupNewCases" (ngSubmit)="updateNewCases()">
+
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-center">New cases</h4>
+                    <div class="form-group hidden-input">
+                        <label for="idNewCases">Id</label>
+                        <input type="text" class="form-control" id="idNewCases" placeholder="Id"
+                            value="{{singleCountry._id}}" formControlName="idNewCases">
+                    </div>
+                    <div class="form-group">
+                        <label for="newCases">New cases</label>
+                        <input type="text" class="form-control" id="newCases" placeholder="Enter new cases" formControlName="newCases">
+                    </div>
+                    <div class="form-group">
+                        <label for="activeNewCases">Actives</label>
+                        <input type="text" class="form-control" id="activeNewCases" placeholder="Enter actives"
+                            value="{{singleCountry.cases.active}}" formControlName="activeNewCases">
+                    </div>
+                    <div class="form-group">
+                        <label for="recoveredNewCases">Recovered</label>
+                        <input type="text" class="form-control" id="recoveredNewCases" placeholder="Enter recovered"
+                            value="{{singleCountry.cases.recovered}}" formControlName="recoveredNewCases">
+                    </div>
+                    <div class="form-group">
+                        <label for="criticalNewCases">Critical</label>
+                        <input type="text" class="form-control" id="criticalNewCases" placeholder="Enter critical"
+                            value="{{singleCountry.cases.critical}}" formControlName="criticalNewCases">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
+                </div>
+            </div>
+        </form>
+
+        <form action="">
+            <div class="row">
+                <div class="col-12">
+                    <hr class="dashed">
+                    <h4 class="text-center">New tests</h4>
+                    <div class="form-group">
+                        <label for="newTests">Tests</label>
+                        <input type="text" class="form-control" id="newTests" placeholder="Enter tests"
+                            value="{{singleCountry.tests.total}}">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
+                </div>
+            </div>
+        </form>
+
+        <form action="">
+            <div class="row">
+                <div class="col-12">
+                    <hr class="dashed">
+                    <h4 class="text-center">New deaths</h4>
+                    <div class="form-group">
+                        <label for="newDeaths">Deaths</label>
+                        <input type="text" class="form-control" id="newDeaths" placeholder="Enter deaths"
+                            value="{{singleCountry.deaths.total}}">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
