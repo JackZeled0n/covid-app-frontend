@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   formGroupTests: FormGroup;
   formGroupDeaths: FormGroup;
   modalInfo: boolean;
+  modalReference: any;
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -51,7 +52,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getStatisticsValues();
+    this.getStatisticsValues(true);
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -91,14 +92,18 @@ export class DashboardComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  getStatisticsValues(): void {
+  getStatisticsValues(flagTable: boolean): void {
     this.statisticsService.getStatistics().subscribe((statistics) => {
       this.statisticsArray = statistics.filter(
         (statistic) =>
           statistic.continent !== 'All' && statistic.continent !== null
       );
       this.getValues(this.statisticsArray);
-      this.dtTrigger.next();
+      if (flagTable === true) {
+        this.dtTrigger.next();
+      } else {
+        this.rerender();
+      }
     });
   }
 
@@ -143,19 +148,10 @@ export class DashboardComponent implements OnInit {
 
   open(content: any, statistic: Statistics): void {
     this.modalInfo = false;
-    this.resetForms();
     this.singleCountry = statistic;
+    this.setUpdateValuesInModal(this.singleCountry);
 
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-edit-statistics' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    this.modalReference = this.modalService.open(content);
   }
 
   openInfo(content: any, statistic: Statistics): void {
@@ -163,26 +159,7 @@ export class DashboardComponent implements OnInit {
     this.singleCountry = statistic;
     this.setValuesInModal(this.singleCountry);
 
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-edit-statistics' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    this.modalService.open(content);
   }
 
   setValuesInModal(statistics: Statistics): void {
@@ -217,6 +194,28 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  setUpdateValuesInModal(statistics: Statistics): void {
+    this.formGroupNewCases.controls['idNewCases'].setValue(statistics._id);
+
+    this.formGroupNewCases.controls['newCases'].setValue(0);
+
+    this.formGroupNewCases.controls['activeNewCases'].setValue(0);
+
+    this.formGroupNewCases.controls['recoveredNewCases'].setValue(0);
+
+    this.formGroupNewCases.controls['criticalNewCases'].setValue(0);
+
+    this.formGroupTests.controls['idCountryTestInfo'].setValue(statistics._id);
+
+    this.formGroupTests.controls['newTests'].setValue(0);
+
+    this.formGroupDeaths.controls['idCountryDeathInfo'].setValue(
+      statistics._id
+    );
+
+    this.formGroupDeaths.controls['newDeaths'].setValue(0);
+  }
+
   updateNewCases(): void {
     const data = {
       statisticId: this.formGroupNewCases.value.idNewCases,
@@ -230,6 +229,8 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateCases(data).subscribe(
         (result) => {
           console.log(result);
+          this.modalReference.close();
+          this.getStatisticsValues(false);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -249,6 +250,8 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateTests(data).subscribe(
         (result) => {
           console.log(result);
+          this.modalReference.close();
+          this.getStatisticsValues(false);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -268,6 +271,8 @@ export class DashboardComponent implements OnInit {
       this.statisticsService.updateDeaths(data).subscribe(
         (result) => {
           console.log(result);
+          this.modalReference.close();
+          this.getStatisticsValues(false);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -287,11 +292,5 @@ export class DashboardComponent implements OnInit {
       this.getValues(this.statisticsArray);
       this.rerender();
     });
-  }
-
-  resetForms(): void {
-    this.formGroupNewCases.reset();
-    this.formGroupTests.reset();
-    this.formGroupDeaths.reset();
   }
 }
