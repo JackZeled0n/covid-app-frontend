@@ -2,10 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as AOS from 'aos';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   formGroupRegister: FormGroup;
   destroyed$ = new Subject<void>();
 
-  constructor(private authService: AuthServiceService) {}
+  constructor(
+    private authService: AuthServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     AOS.init();
@@ -38,12 +43,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(
           (result) => {
-            console.log(result);
-            alert(result);
+            Swal.fire({
+              title: 'Do you want to login?',
+              text: 'You have been registered',
+              icon: 'success',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, login!',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigateByUrl('/login');
+              }
+            });
           },
           (error: HttpErrorResponse) => {
-            console.log(error);
-            console.log(error.error.message);
+            Swal.fire('Register', error.error.message, 'error');
           }
         );
     }
