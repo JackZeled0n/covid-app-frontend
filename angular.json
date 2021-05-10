@@ -36,7 +36,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.js"
             ],
             "allowedCommonJsDependencies": [
-              "chart.js"
+              "chart.js",
+              "lodash"
             ]
           },
           "configurations": {

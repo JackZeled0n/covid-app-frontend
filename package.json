@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node server.js",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -26,8 +26,10 @@
     "chart.js": "2.9.3",
     "datatables.net": "^1.10.20",
     "datatables.net-dt": "^1.10.20",
+    "express": "^4.17.1",
     "jquery": "^3.6.0",
     "ng2-charts": "2.3.0",
+    "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.16.7",
     "tslib": "^2.0.0",
