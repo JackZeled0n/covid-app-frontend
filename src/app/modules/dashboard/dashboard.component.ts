@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   singleCountry: Statistics;
   formGroupNewCases: FormGroup;
+  formGroupTests: FormGroup;
+  formGroupDeaths: FormGroup;
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -56,6 +58,8 @@ export class DashboardComponent implements OnInit {
     };
 
     this.initFormNewCases();
+    this.initFormTests();
+    this.initFormDeaths();
   }
 
   initFormNewCases(): void {
@@ -65,6 +69,20 @@ export class DashboardComponent implements OnInit {
       activeNewCases: new FormControl('', [Validators.required]),
       recoveredNewCases: new FormControl('', [Validators.required]),
       criticalNewCases: new FormControl('', [Validators.required]),
+    });
+  }
+
+  initFormTests(): void {
+    this.formGroupTests = new FormGroup({
+      idCountryTestInfo: new FormControl('', [Validators.required]),
+      newTests: new FormControl('', [Validators.required]),
+    });
+  }
+
+  initFormDeaths(): void {
+    this.formGroupDeaths = new FormGroup({
+      idCountryDeathInfo: new FormControl('', [Validators.required]),
+      newDeaths: new FormControl('', [Validators.required]),
     });
   }
 
@@ -125,25 +143,7 @@ export class DashboardComponent implements OnInit {
   open(content: any, statistic: Statistics): void {
     this.singleCountry = statistic;
 
-    this.formGroupNewCases.controls['idNewCases'].setValue(
-      this.singleCountry._id
-    );
-
-    this.formGroupNewCases.controls['newCases'].setValue(
-      this.singleCountry.cases.newCases
-    );
-
-    this.formGroupNewCases.controls['activeNewCases'].setValue(
-      this.singleCountry.cases.active
-    );
-
-    this.formGroupNewCases.controls['recoveredNewCases'].setValue(
-      this.singleCountry.cases.recovered
-    );
-
-    this.formGroupNewCases.controls['criticalNewCases'].setValue(
-      this.singleCountry.cases.critical
-    );
+    this.setValuesInModal(this.singleCountry);
 
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-edit-statistics' })
@@ -167,6 +167,44 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  setValuesInModal(statistics: Statistics): void {
+    this.formGroupNewCases.controls['idNewCases'].setValue(
+      this.singleCountry._id
+    );
+
+    this.formGroupNewCases.controls['newCases'].setValue(
+      this.singleCountry.cases.newCases
+    );
+
+    this.formGroupNewCases.controls['activeNewCases'].setValue(
+      this.singleCountry.cases.active
+    );
+
+    this.formGroupNewCases.controls['recoveredNewCases'].setValue(
+      this.singleCountry.cases.recovered
+    );
+
+    this.formGroupNewCases.controls['criticalNewCases'].setValue(
+      this.singleCountry.cases.critical
+    );
+
+    this.formGroupTests.controls['idCountryTestInfo'].setValue(
+      this.singleCountry._id
+    );
+
+    this.formGroupTests.controls['newTests'].setValue(
+      this.singleCountry.tests.total
+    );
+
+    this.formGroupDeaths.controls['idCountryDeathInfo'].setValue(
+      this.singleCountry._id
+    );
+
+    this.formGroupDeaths.controls['newDeaths'].setValue(
+      this.singleCountry.deaths.total
+    );
+  }
+
   updateNewCases(): void {
     const data = {
       statisticId: this.formGroupNewCases.value.idNewCases,
@@ -178,6 +216,26 @@ export class DashboardComponent implements OnInit {
 
     if (this.formGroupNewCases.valid) {
       this.statisticsService.updateCases(data).subscribe(
+        (result) => {
+          console.log(result);
+          alert(result);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          console.log(error.error.message);
+        }
+      );
+    }
+  }
+
+  updateTests(): void {
+    const data = {
+      statisticId: this.formGroupTests.value.idCountryTestInfo,
+      newTests: this.formGroupTests.value.newTests,
+    };
+
+    if (this.formGroupTests.valid) {
+      this.statisticsService.updateTests(data).subscribe(
         (result) => {
           console.log(result);
           alert(result);
