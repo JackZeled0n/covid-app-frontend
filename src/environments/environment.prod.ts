@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  developmentUrl: 'https://covid19-statistics-api.herokuapp.com/',
 };
