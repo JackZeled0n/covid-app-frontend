@@ -13,20 +13,24 @@
 
                         <h3 class="text-center">Login</h3>
                         <p class="mb-4">Welcome back! Please login to your account.</p>
-                        <form class="mt-4" action="#">
+
+                        <form class="mt-4" [formGroup]="formGroup" (ngSubmit)="login()">
                             <div class="form-group first">
                                 <label for="username" class="text-left">Username</label>
-                                <input type="text" class="form-control" placeholder="your-email@gmail.com"
+                                <input type="text" class="form-control" placeholder="username" formControlName="userName"
                                     id="username">
                             </div>
                             <div class="form-group last mb-3">
                                 <label for="password" class="text-left">Password</label>
-                                <input type="password" class="form-control" placeholder="Your Password" id="password">
+                                <input type="password" class="form-control" placeholder="Your Password" formControlName="password" id="password">
                             </div>
-                            <input type="submit" value="Log In" class="btn btn-block btn-primary mt-5">
+                            <button type="submit" class="btn btn-block btn-primary mt-5">Log In</button>
                         </form>
+
+
+
                         <div class="mt-5 text-center">
-                            <span class="new-account-label">Don't you have an account yet? <a href="#">create an
+                            <span class="new-account-label">Don't you have an account yet? <a routerLink="/register">create an
                                     account</a></span>
                         </div>
 
