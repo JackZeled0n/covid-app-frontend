@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   formGroupNewCases: FormGroup;
   formGroupTests: FormGroup;
   formGroupDeaths: FormGroup;
+  modalInfo: boolean;
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -141,8 +142,25 @@ export class DashboardComponent implements OnInit {
   }
 
   open(content: any, statistic: Statistics): void {
+    this.modalInfo = false;
+    this.resetForms();
     this.singleCountry = statistic;
 
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-edit-statistics' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  openInfo(content: any, statistic: Statistics): void {
+    this.modalInfo = true;
+    this.singleCountry = statistic;
     this.setValuesInModal(this.singleCountry);
 
     this.modalService
@@ -168,40 +186,34 @@ export class DashboardComponent implements OnInit {
   }
 
   setValuesInModal(statistics: Statistics): void {
-    this.formGroupNewCases.controls['idNewCases'].setValue(
-      this.singleCountry._id
-    );
+    this.formGroupNewCases.controls['idNewCases'].setValue(statistics._id);
 
     this.formGroupNewCases.controls['newCases'].setValue(
-      this.singleCountry.cases.newCases
+      statistics.cases.newCases
     );
 
     this.formGroupNewCases.controls['activeNewCases'].setValue(
-      this.singleCountry.cases.active
+      statistics.cases.active
     );
 
     this.formGroupNewCases.controls['recoveredNewCases'].setValue(
-      this.singleCountry.cases.recovered
+      statistics.cases.recovered
     );
 
     this.formGroupNewCases.controls['criticalNewCases'].setValue(
-      this.singleCountry.cases.critical
+      statistics.cases.critical
     );
 
-    this.formGroupTests.controls['idCountryTestInfo'].setValue(
-      this.singleCountry._id
-    );
+    this.formGroupTests.controls['idCountryTestInfo'].setValue(statistics._id);
 
-    this.formGroupTests.controls['newTests'].setValue(
-      this.singleCountry.tests.total
-    );
+    this.formGroupTests.controls['newTests'].setValue(statistics.tests.total);
 
     this.formGroupDeaths.controls['idCountryDeathInfo'].setValue(
-      this.singleCountry._id
+      statistics._id
     );
 
     this.formGroupDeaths.controls['newDeaths'].setValue(
-      this.singleCountry.deaths.total
+      statistics.deaths.total
     );
   }
 
@@ -266,5 +278,11 @@ export class DashboardComponent implements OnInit {
         }
       );
     }
+  }
+
+  resetForms(): void {
+    this.formGroupNewCases.reset();
+    this.formGroupTests.reset();
+    this.formGroupDeaths.reset();
   }
 }

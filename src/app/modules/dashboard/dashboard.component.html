@@ -145,8 +145,11 @@
                                                 <td>{{statistic.country}}</td>
                                                 <td>{{statistic.population | number}}</td>
                                                 <td>
+                                                    <button class="btn btn-info mr-3"
+                                                        (click)="openInfo(mymodal, statistic)">Details</button>
+
                                                     <button class="btn btn-primary"
-                                                        (click)="open(mymodal, statistic)">Edit</button>
+                                                        (click)="open(mymodal, statistic)">Update</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -172,7 +175,7 @@
 
 <ng-template #mymodal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-edit-statistics">Update statistics from {{singleCountry.country}}</h4>
+        <h4 class="modal-title" id="modal-edit-statistics">{{singleCountry.country}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">×</span>
         </button>
@@ -211,7 +214,7 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div [ngClass]="modalInfo === true ? 'hidden-input' : ''" class="col-12">
                     <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
                 </div>
             </div>
@@ -234,7 +237,7 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div [ngClass]="modalInfo === true ? 'hidden-input' : ''" class="col-12">
                     <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
                 </div>
             </div>
@@ -247,15 +250,17 @@
                     <h4 class="text-center">New deaths</h4>
                     <div class="form-group hidden-input">
                         <label for="idCountryDeathInfo">Id</label>
-                        <input type="text" class="form-control" id="idCountryDeathInfo" placeholder="Id" formControlName="idCountryDeathInfo">
+                        <input type="text" class="form-control" id="idCountryDeathInfo" placeholder="Id"
+                            formControlName="idCountryDeathInfo">
                     </div>
                     <div class="form-group">
                         <label for="newDeaths">Deaths</label>
-                        <input type="text" class="form-control" id="newDeaths" placeholder="Enter deaths" formControlName="newDeaths">
+                        <input type="text" class="form-control" id="newDeaths" placeholder="Enter deaths"
+                            formControlName="newDeaths">
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div [ngClass]="modalInfo === true ? 'hidden-input' : ''" class="col-12">
                     <button type="submit" class="btn btn-block btn-primary mt-2">Update</button>
                 </div>
             </div>
