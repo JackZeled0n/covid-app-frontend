@@ -9,4 +9,5 @@ export interface Statistics {
   population: number;
   continent: string;
   country: string;
+  _id: string;
 }
