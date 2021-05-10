@@ -101,16 +101,16 @@
 
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-                    <li class="nav-item" *ngFor="let continent of continents; let i = index;">
+                    <li class="nav-item" *ngFor="let summaryStatistic of summaryStatistics; let i = index;">
                         <a [ngClass]="i === 0 ? 'nav-link active' : 'nav-link'" id="pills-continents-tab"
                             data-toggle="pill" href="#pills-continents" role="tab" aria-controls="pills-continents"
-                            aria-selected="true" (click)="getStatisticsByContinent(continent)">
-                            <div class="card shadow {{continent}}">
+                            aria-selected="true" (click)="getStatisticsByContinent(summaryStatistic.continent)">
+                            <div class="card shadow {{summaryStatistic.continent}}">
                                 <div class="card-body">
-                                    <h3>{{continent}}</h3>
-                                    <h5>Total cases: 154,197.355</h5>
-                                    <h5>Tests: 98,197.355</h5>
-                                    <h5>Deaths: 1,197.355</h5>
+                                    <h3>{{summaryStatistic.continent}}</h3>
+                                    <h5>Total cases: {{summaryStatistic.totalCases | number}}</h5>
+                                    <h5>Tests: {{summaryStatistic.totalTests | number}}</h5>
+                                    <h5>Deaths: {{summaryStatistic.totalDeaths | number}}</h5>
                                 </div>
                             </div>
                         </a>

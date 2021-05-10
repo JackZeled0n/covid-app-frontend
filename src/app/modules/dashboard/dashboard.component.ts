@@ -10,9 +10,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import getError from '../utils/error';
+import { SummaryStatistics } from 'src/app/core/interfaces/summary-statistics';
+import { groupBy } from '../utils/group-by';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,6 +41,7 @@ export class DashboardComponent implements OnInit {
   modalInfo: boolean;
   modalReference: any;
 
+  summaryStatistics: SummaryStatistics[] = [];
   destroyed$ = new Subject<void>();
 
   public pieChartOptions: ChartOptions = {
@@ -137,22 +140,48 @@ export class DashboardComponent implements OnInit {
     let summaryTotalCases = 0;
     let summaryTotalTests = 0;
     let summaryTotalDeaths = 0;
-    const continentsSet = new Set();
+
+    this.calculateSummaryStatistics(statisticsArray);
 
     for (const statistic of statisticsArray) {
       summaryTotalCases += statistic.cases.total || 0;
       summaryTotalTests += statistic.tests.total || 0;
       summaryTotalDeaths += statistic.deaths.total || 0;
-
-      continentsSet.add(statistic.continent);
     }
 
     this.totalCases = summaryTotalCases;
     this.totalTests = summaryTotalTests;
     this.totalDeaths = summaryTotalDeaths;
-    this.continents = continentsSet;
 
     this.pieChartData = [this.totalCases, this.totalTests, this.totalDeaths];
+  }
+
+  calculateSummaryStatistics(statisticsArray: Statistics[]): void {
+    this.summaryStatistics = [];
+    const groupContinents = groupBy(statisticsArray, 'continent');
+    const resultado: any = Object.entries(groupContinents);
+
+    for (let res of resultado) {
+      const totalCases = res[1]
+        .map((statistic: Statistics) => statistic.cases.total)
+        .map(Number)
+        .reduce((total1: number, total2: number) => total1 + total2);
+      const totalTests = res[1]
+        .map((statistic: Statistics) => statistic.tests.total)
+        .map(Number)
+        .reduce((total1: number, total2: number) => total1 + total2);
+      const totalDeaths = res[1]
+        .map((statistic: Statistics) => statistic.deaths.total)
+        .map(Number)
+        .reduce((total1: number, total2: number) => total1 + total2);
+
+      this.summaryStatistics.push({
+        continent: res[0],
+        totalCases,
+        totalTests,
+        totalDeaths,
+      });
+    }
   }
 
   getStatisticsByContinent(continent: string): void {
@@ -258,7 +287,6 @@ export class DashboardComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(
           (result) => {
-            console.log(result);
             this.modalReference.close();
             this.getStatisticsValues(false);
           },
@@ -282,7 +310,6 @@ export class DashboardComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(
           (result) => {
-            console.log(result);
             this.modalReference.close();
             this.getStatisticsValues(false);
           },
@@ -306,7 +333,6 @@ export class DashboardComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(
           (result) => {
-            console.log(result);
             this.modalReference.close();
             this.getStatisticsValues(false);
           },
