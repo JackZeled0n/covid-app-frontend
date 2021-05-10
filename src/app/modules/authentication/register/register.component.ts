@@ -1,5 +1,4 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import Swal from 'sweetalert2';
+import getError from '../../utils/error';
 
 @Component({
   selector: 'app-register',
@@ -58,7 +58,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             });
           },
           (error: HttpErrorResponse) => {
-            Swal.fire('Register', error.error.message, 'error');
+            const errorMessage = getError(error);
+            Swal.fire('Register', errorMessage, 'error');
           }
         );
     }

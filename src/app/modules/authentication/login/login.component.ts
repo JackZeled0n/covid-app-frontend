@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { UserLogged } from 'src/app/core/interfaces/login';
 import { Router } from '@angular/router';
+import getError from '../../utils/error';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/dashboard');
           },
           (error: HttpErrorResponse) => {
-            Swal.fire('Login', error.error.message, 'error');
+            const errorMessage = getError(error);
+            Swal.fire('Login', errorMessage, 'error');
           }
         );
     }

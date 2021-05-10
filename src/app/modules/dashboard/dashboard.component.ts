@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import getError from '../utils/error';
 
 @Component({
   selector: 'app-dashboard',
@@ -261,8 +263,8 @@ export class DashboardComponent implements OnInit {
             this.getStatisticsValues(false);
           },
           (error: HttpErrorResponse) => {
-            console.log(error);
-            console.log(error.error.message);
+            const errorMessage = getError(error);
+            Swal.fire('Update new cases', errorMessage, 'error');
           }
         );
     }
@@ -285,8 +287,8 @@ export class DashboardComponent implements OnInit {
             this.getStatisticsValues(false);
           },
           (error: HttpErrorResponse) => {
-            console.log(error);
-            console.log(error.error.message);
+            const errorMessage = getError(error);
+            Swal.fire('Update tests', errorMessage, 'error');
           }
         );
     }
@@ -309,8 +311,8 @@ export class DashboardComponent implements OnInit {
             this.getStatisticsValues(false);
           },
           (error: HttpErrorResponse) => {
-            console.log(error);
-            console.log(error.error.message);
+            const errorMessage = getError(error);
+            Swal.fire('Update deaths', errorMessage, 'error');
           }
         );
     }
