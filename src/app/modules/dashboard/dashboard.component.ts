@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
     {
       afterLayout: function (chart) {
         chart.legend.legendItems.forEach((label) => {
-          let value = chart.data.datasets[0].data[label.index];
+          const value = chart.data.datasets[0].data[label.index];
 
           label.text += ': ' + value;
           return label;
