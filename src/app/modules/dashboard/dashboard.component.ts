@@ -5,12 +5,12 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ChartType, ChartOptions } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
-import { ThrowStmt } from '@angular/compiler';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   formGroupDeaths: FormGroup;
   modalInfo: boolean;
   modalReference: any;
+
+  destroyed$ = new Subject<void>();
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -93,23 +95,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
-
   getStatisticsValues(flagTable: boolean): void {
-    this.statisticsService.getStatistics().subscribe((statistics) => {
-      this.statisticsArray = statistics.filter(
-        (statistic) =>
-          statistic.continent !== 'All' && statistic.continent !== null
-      );
-      this.getValues(this.statisticsArray);
-      if (flagTable === true) {
-        this.dtTrigger.next();
-      } else {
-        this.rerender();
-      }
-    });
+    this.statisticsService
+      .getStatistics()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((statistics) => {
+        this.statisticsArray = statistics.filter(
+          (statistic) =>
+            statistic.continent !== 'All' && statistic.continent !== null
+        );
+        this.getValues(this.statisticsArray);
+        if (flagTable === true) {
+          this.dtTrigger.next();
+        } else {
+          this.rerender();
+        }
+      });
   }
 
   getValues(statisticsArray: any[]): void {
@@ -137,6 +138,7 @@ export class DashboardComponent implements OnInit {
   getStatisticsByContinent(continent: string): void {
     this.statisticsService
       .getByContinentName(continent)
+      .pipe(takeUntil(this.destroyed$))
       .subscribe((informationForContinent) => {
         this.statisticsArray = [...informationForContinent];
         this.rerender();
@@ -231,17 +233,20 @@ export class DashboardComponent implements OnInit {
     };
 
     if (this.formGroupNewCases.valid) {
-      this.statisticsService.updateCases(data).subscribe(
-        (result) => {
-          console.log(result);
-          this.modalReference.close();
-          this.getStatisticsValues(false);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          console.log(error.error.message);
-        }
-      );
+      this.statisticsService
+        .updateCases(data)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.modalReference.close();
+            this.getStatisticsValues(false);
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+            console.log(error.error.message);
+          }
+        );
     }
   }
 
@@ -252,17 +257,20 @@ export class DashboardComponent implements OnInit {
     };
 
     if (this.formGroupTests.valid) {
-      this.statisticsService.updateTests(data).subscribe(
-        (result) => {
-          console.log(result);
-          this.modalReference.close();
-          this.getStatisticsValues(false);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          console.log(error.error.message);
-        }
-      );
+      this.statisticsService
+        .updateTests(data)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.modalReference.close();
+            this.getStatisticsValues(false);
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+            console.log(error.error.message);
+          }
+        );
     }
   }
 
@@ -273,34 +281,50 @@ export class DashboardComponent implements OnInit {
     };
 
     if (this.formGroupTests.valid) {
-      this.statisticsService.updateDeaths(data).subscribe(
-        (result) => {
-          console.log(result);
-          this.modalReference.close();
-          this.getStatisticsValues(false);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          console.log(error.error.message);
-        }
-      );
+      this.statisticsService
+        .updateDeaths(data)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.modalReference.close();
+            this.getStatisticsValues(false);
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+            console.log(error.error.message);
+          }
+        );
     }
   }
 
   synchronize(): void {
-    this.statisticsService.synchronizeInfo().subscribe((statistics) => {
-      this.statisticsArray = statistics.filter(
-        (statistic) =>
-          statistic.continent !== 'All' && statistic.continent !== null
-      );
+    this.statisticsService
+      .synchronizeInfo()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((statistics) => {
+        this.statisticsArray = statistics.filter(
+          (statistic) =>
+            statistic.continent !== 'All' && statistic.continent !== null
+        );
 
-      this.getValues(this.statisticsArray);
-      this.rerender();
-    });
+        this.getValues(this.statisticsArray);
+        this.rerender();
+      });
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigateByUrl('/');
+    this.authService
+      .logout()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        this.router.navigateByUrl('/');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }
