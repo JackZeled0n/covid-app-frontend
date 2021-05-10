@@ -58,4 +58,10 @@ export class StatisticsService {
       }
     );
   }
+
+  synchronizeInfo(): Observable<Statistics[]> {
+    return this.http.get<Statistics[]>(
+      environment.developmentUrl + 'sync'
+    );
+  }
 }
