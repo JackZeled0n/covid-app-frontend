@@ -47,4 +47,15 @@ export class StatisticsService {
       }
     );
   }
+
+  updateDeaths(body: any): Observable<any> {
+    const data = JSON.stringify(body);
+    return this.http.put<Statistics>(
+      environment.developmentUrl + 'statistics/new-deaths',
+      data,
+      {
+        headers: this.headers,
+      }
+    );
+  }
 }
