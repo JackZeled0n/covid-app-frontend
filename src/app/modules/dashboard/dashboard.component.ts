@@ -4,7 +4,7 @@ import { StatisticsService } from 'src/app/core/services/statistics/statistics.s
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ChartType, ChartOptions } from 'chart.js';
-import { Label, SingleDataSet } from 'ng2-charts';
+import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit {
   public pieChartData: SingleDataSet = [0, 0, 0];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
-  public pieChartPlugins = [];
   dtTrigger: Subject<any> = new Subject<any>();
   singleCountry: Statistics;
   formGroupNewCases: FormGroup;
@@ -48,6 +47,25 @@ export class DashboardComponent implements OnInit {
     'Total cases',
     'Total tests',
     'Total deaths',
+  ];
+
+  public pieChartPlugins = [
+    {
+      afterLayout: function (chart) {
+        chart.legend.legendItems.forEach((label) => {
+          let value = chart.data.datasets[0].data[label.index];
+
+          label.text += ': ' + value;
+          return label;
+        });
+      },
+    },
+  ];
+
+  colors: Color[] = [
+    {
+      backgroundColor: ['#28a745', '#007bff', '#dc3545'],
+    },
   ];
 
   constructor(
