@@ -81,3 +81,8 @@ hr.dashed {
 .hidden-input {
     display: none;
 }
+
+.navbar-collapse {
+    flex-basis: auto !important;    
+    flex-grow: 0 !important;
+}
