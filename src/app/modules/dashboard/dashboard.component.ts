@@ -8,6 +8,9 @@ import { Label, SingleDataSet } from 'ng2-charts';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { ThrowStmt } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,7 +51,9 @@ export class DashboardComponent implements OnInit {
   constructor(
     private statisticsService: StatisticsService,
     private cdr: ChangeDetectorRef,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -292,5 +297,10 @@ export class DashboardComponent implements OnInit {
       this.getValues(this.statisticsArray);
       this.rerender();
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/');
   }
 }

@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/dashboard');
           },
           (error: HttpErrorResponse) => {
-            Swal.fire(error.error.message, 'error');
+            Swal.fire('Login', error.error.message, 'error');
           }
         );
     }

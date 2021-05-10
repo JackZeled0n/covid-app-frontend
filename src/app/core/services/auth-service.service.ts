@@ -23,5 +23,7 @@ export class AuthServiceService {
     return this.http.post(environment.developmentUrl + 'users', data);
   }
 
-  logout() {}
+  logout(): Observable<any> {
+    return this.http.get(environment.developmentUrl + 'auth/logout');
+  }
 }
